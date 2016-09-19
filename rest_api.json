@@ -1,0 +1,327 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "集历 API",
+        "description": "集历是一款赛事赛程日历APP,提供最新最精准的赛事直播日历,支持一键导入系统日历,不再错过任何一场喜欢的比赛,更不用忍受APP广告带来的痛苦",
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1:7050",
+    "basePath": "/v1",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/leagues": {
+            "get": {
+                "summary": "联赛列表",
+                "description": "Leagues返回系统支持的一系列联赛信息, 包括联赛名称,联赛logo等等",
+                "tags": [
+                    "League"
+                ],
+                "operationId": "getLeagues",
+                "responses": {
+                    "200": {
+                        "description": "联赛列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/League"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "新建联赛",
+                "description": "根据参数,新建联赛",
+                "tags": [
+                    "League"
+                ],
+                "operationId": "postLeagues",
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "league",
+                        "in": "body",
+                        "description": "整个联赛信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/League"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "新增了一条联赛信息",
+                        "schema": {
+                            "$ref": "#/definitions/League"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/leagues/{UUID}":{
+            "get": {
+                "summary": "获取特定联赛信息",
+                "description": "获取特定联赛信息,包括名称、logo等;如果UUID不存在,返回错误",
+                "tags":[
+                    "League"
+                ],
+                "operationId": "getLeagueByUUID",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "League identity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Individual League contents",
+                        "schema": {
+                            "$ref": "#/definitions/League"
+                        }
+                    },
+                    "default":{
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "更新特定联赛信息",
+                "description": "更新联赛信息, 全额修改",
+                "tags": [
+                    "League"
+                ],
+                "operationId": "putLeagueByUUID",
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "League identity",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "league",
+                        "in": "body",
+                        "description": "整个联赛信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/League"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "修改了一条联赛信息",
+                        "schema": {
+                            "$ref": "#/definitions/League"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "删除特定联赛信息",
+                "description": "删除特定联赛信息",
+                "tags": [
+                    "League"
+                ],
+                "operationId": "deleteLeagueByUUID",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "League identity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除了一条联赛信息"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/leagues/{{UUID}}/seasons": {
+            "get": {
+                "summary": "联赛赛季列表",
+                "description": "返回系统支持的一系列联赛赛季信息, 仅是支持这样的操作,但是不必要, app不会用到",
+                "tags": [
+                    "Season"
+                ],
+                "operationId": "getLeagueSeasons",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "League identity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "联赛赛季列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Season"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "新建联赛赛季",
+                "description": "根据参数,新建联赛赛季",
+                "tags": [
+                    "Season"
+                ],
+                "operationId": "postLeagueSeason",
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "League identity",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "season",
+                        "in": "body",
+                        "description": "整个联赛赛季信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "新增了一条联赛赛季信息",
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "League": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "identity of League"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "League name, such as NBA, 西甲, 英超"
+                },
+                "logo": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "League logo, maybe a url, maybe a file path"
+                },
+                "desc": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "League desc"
+                }
+            }
+        },
+        "Season": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "format":"string",
+                    "description": "赛季标识"
+                },
+                "league": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "赛季属于哪个联赛, 此处为联赛uuid"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "赛季名称,如 2016NBA季前赛"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "integer",
+                    "description": "error code"
+                },
+                "message": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "error message description"
+                }
+            }
+        }
+    }
+}
