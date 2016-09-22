@@ -260,6 +260,350 @@
                     }
                 }
             }
+        },
+        "/seasons/{SUUID}": {
+            "get": {
+                "summary": "联赛赛季信息",
+                "description": "返回联赛赛季信息, 仅是支持这样的操作,但是不必要, app不会用到",
+                "tags": [
+                    "Season"
+                ],
+                "operationId": "getLeagueSeasonByUUID",
+                "parameters": [
+                    {
+                        "name": "SUUID",
+                        "in": "path",
+                        "description": "League season identity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "联赛赛季",
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "更新联赛赛季",
+                "description": "根据参数,更新联赛赛季",
+                "tags": [
+                    "Season"
+                ],
+                "operationId": "putLeagueSeasonByUUID",
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "SUUID",
+                        "in": "path",
+                        "description": "League season identity",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "season",
+                        "in": "body",
+                        "description": "整个联赛赛季信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新了一条联赛赛季信息",
+                        "schema": {
+                            "$ref": "#/definitions/Season"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "删除联赛赛季",
+                "description": "删除联赛赛季",
+                "tags": [
+                    "Season"
+                ],
+                "operationId": "deleteLeagueSeasonByUUID",
+                "parameters": [
+                    {
+                        "name": "SUUID",
+                        "in": "path",
+                        "description": "League season identity",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除了一条联赛赛季信息"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/games": {
+            "get": {
+                "summary": "比赛列表",
+                "description": "比赛列表",
+                "tags": [
+                    "Game"
+                ],
+                "operationId": "getGames",
+                "parameters": [
+                    {
+                        "name": "ts",
+                        "in": "query",
+                        "description": "timestamp, 默认为当前服务器时间",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "luuid",
+                        "in": "query",
+                        "description": "League identity",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "suuid",
+                        "in": "query",
+                        "description": "League season identity",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "比赛列表",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Game"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "新增比赛",
+                "description": "新增一场比赛",
+                "tags": [
+                    "Game"
+                ],
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "operationId": "postGames",
+                "parameters": [
+                    {
+                        "name": "game",
+                        "in": "body",
+                        "description": "新增比赛的信息",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Game"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "新增比赛成功",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Game"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/games/{UUID}": {
+            "get": {
+                "summary": "比赛信息",
+                "description": "获取特定场次比赛信息",
+                "tags": [
+                    "Game"
+                ],
+                "operationId": "getGameByUUID",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "比赛标识ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "比赛信息",
+                        "schema": {
+                            "$ref": "#/definitions/Game"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "更新比赛信息",
+                "description": "根据uuid,替换一场比赛的信息",
+                "tags": [
+                    "Game"
+                ],
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "operationId": "putGameByUUID",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "比赛标识id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "game",
+                        "in": "body",
+                        "description": "比赛的信息",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Game"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新比赛成功",
+                        "schema": {
+                            "$ref": "#/definitions/Game"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "删除比赛信息",
+                "description": "根据uuid,删除一场比赛的信息",
+                "tags": [
+                    "Game"
+                ],
+                "operationId": "deleteGameByUUID",
+                "parameters": [
+                    {
+                        "name": "UUID",
+                        "in": "path",
+                        "description": "比赛标识id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除比赛成功"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/gamers": {
+            "post": {
+                "summary": "新增比赛方",
+                "description": "新增比赛方",
+                "tags": [
+                    "Gamer"
+                ],
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "operationId": "postGamers",
+                "parameters": [
+                    {
+                        "name": "gamer",
+                        "in": "body",
+                        "description": "新增比赛方的信息",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Gamer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "新增比赛方成功",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Gamer"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -296,7 +640,7 @@
                     "format":"string",
                     "description": "赛季标识"
                 },
-                "league": {
+                "luuid": {
                     "type": "string",
                     "format": "string",
                     "description": "赛季属于哪个联赛, 此处为联赛uuid"
@@ -308,12 +652,58 @@
                 }
             }
         },
+        "Game": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "比赛标识id"
+                },
+                "suuid": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "联赛赛季uuid"
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "比赛开始时间"
+                },
+                "gamer1": {
+                    "$ref": "#/definitions/Gamer"
+                },
+                "gamer2": {
+                    "$ref": "#/definitions/Gamer"
+                }
+            }
+        },
+        "Gamer": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "对阵人id"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "对阵人名称, 如 热火、骑士、勇士"
+                },
+                "logo": {
+                    "type": "string",
+                    "format": "string",
+                    "description": "对阵人的图片, url或者相对路径"
+                }
+            }
+        },
         "Error": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer",
-                    "format": "integer",
+                    "format": "int32",
                     "description": "error code"
                 },
                 "message": {
