@@ -20,6 +20,7 @@ swagger generate server -f ./rest_api.json -t ./golang
 * 一个主界面, 如大麦网日历功能, 一个日历放上边,下边是今天的所有比赛
 * 一个右侧边栏,用于展示在主界面的赛事筛选
 * 将筛选结果一键导入系统日历
+* APP LOGO
 
 ## APP细致规则
 * APP暂不用开发管理端,直接数据采集
